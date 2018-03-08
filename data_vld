@@ -2,3 +2,19 @@
 """
 pass
 """
+
+
+def calculating_age(loan_id, id_card):
+    try:
+        data_in = parse(re.findall(r'\d{8}', loan_id)[0])
+    except IndexError:
+        data_in = datetime.today()
+    born = parse(id_card[6:14])
+    try:
+        birthday = born.replace(year=data_in.year)
+    except ValueError:
+        birthday = born.replace(year=data_in.year, day=data_in.day - 1)
+    if birthday > born:
+        return data_in.year - born.year - 1
+    else:
+        return data_in.year - born.year
